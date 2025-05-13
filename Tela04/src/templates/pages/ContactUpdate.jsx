@@ -23,7 +23,7 @@ function ContactUpdate({ navigation }) {
             });
         } catch(error){
             setTimeout(() => {
-                Alert.alert("Falha ao atualizar contato");
+                alert("Falha ao atualizar contato");
                 navigation.navigate("contacts");
             }, 30000)
         }
@@ -31,7 +31,7 @@ function ContactUpdate({ navigation }) {
     const handleDelete = async () => {
         try{
             await ContactController.deleteContact(user.id);
-            Alert.alert("Contato removido");
+            alert("Contato removido");
             navigation.navigate("contacts");
         } catch(error){
             setTimeout(() => {
