@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import Login from './src/templates/pages/Login';
 import { useState } from 'react';
 import Register from './src/templates/pages/Register';
+import ContactUpdate from './src/templates/pages/ContactUpdate';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,10 @@ export default function App() {
          name="Register"
         component={Register}
         />
+        <Stack.Screen
+          name="ContactUpdate"
+          component={ContactUpdate}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
