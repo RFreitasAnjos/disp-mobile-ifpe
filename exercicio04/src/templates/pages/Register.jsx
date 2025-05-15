@@ -1,41 +1,56 @@
-import React, { useState } from 'react';
-import { View, Text } from 'react-native';
-import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import { app } from '../../../../Tela04/config/config';
-import { Button, Input } from 'react-native-elements';
+import React from "react";
+import { useState } from "react";
+import { View, Text } from "react-native";
+import { Button, Input } from "react-native-elements";
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { app, analytics } from '../../../config/config';
+import { useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
 
-export default function Register({navigation}){
+const Register = ({navigation}) =>{
+
+    const [name, setName] = useState('');
+    const [cpf, setCpf] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const auth = getAuth(app);
-    const handleRegister = () => {
+
+    const handleRegister = async () => {
+        const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then((userCredential) => {
             alert('Usuário cadastrado com sucesso!');
+            const user = userCredential.user;
             navigation.navigate('login');
         })
         .catch((error) => {
             alert('Erro ao cadastrar usuário', error.message);
+            console.error('Error:', error);
+            const errorCode = error.code;
+            const errorMessage = error.message;
         });
     };
     return (
         <View style={style.container}>
         <View style={style.form}>
-            <Text>Registrar</Text>
-            <Text>E-mail</Text>
             <Input
-            placeholder="E-mail"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
+            placeholder="Nome"
+            value={name}
+            onChangeText={setName}
             autoCapitalize="none"
             style={style.input}
-            autoCompleteType="email"
             />
-            <Text>Senha</Text>
+            <Input
+            placeholder="CPF"
+            value={cpf}
+            onChangeText={setCpf}
+            />
+            <Input
+            placeholder="E-mail"
+            onChangeText={setEmail}
+            style={style.input}
+            />
             <Input
             placeholder="Senha"
-            value={password}
             onChangeText={setPassword}
             secureTextEntry
             style={style.input}
@@ -50,3 +65,23 @@ export default function Register({navigation}){
         </View>
     );
 }
+
+const style = {
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    form: {
+        width: '80%',
+        marginBottom: 20,
+    },
+    input: {
+        marginBottom: 10,
+    },
+    buttons: {
+        marginTop: 10,
+    },
+};
+
+export default Register;

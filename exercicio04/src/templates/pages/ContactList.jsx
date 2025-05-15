@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useEffect } from 'react';
 
-export default function ContactList({ navigation }) {
+const ContactList = ({ navigation }) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ export default function ContactList({ navigation }) {
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+                const response = await axios.get('http://localhost:3000/contact');
                 setContacts(response.data);
             } catch (error) {
                 console.error('Error fetching contacts:', error);
@@ -25,18 +25,21 @@ export default function ContactList({ navigation }) {
     }, []);
     const handleAddContact = async () => {
         try {
-            const newContact = { name, email };
-            const response = await axios.post('https://jsonplaceholder.typicode.com/users', newContact);
+            const newContact = { name, email, telefone };
+            const response = await axios.post('http://localhost:3000/contact', newContact);
             setContacts([...contacts, response.data]);
             setName('');
             setEmail('');
+            setTelefone('');
+            alert('Contato adicionado com sucesso!');
+            navigation.navigate('contactsUpdate');
         } catch (error) {
             console.error('Error adding contact:', error);
         }
     };
     const handleDeleteContact = async (id) => {
         try {
-            await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+            await axios.delete(`hhttp://localhost:3000/contact/${id}`);
             setContacts(contacts.filter(contact => contact.id !== id));
         } catch (error) {
             console.error('Error deleting contact:', error);
@@ -66,15 +69,57 @@ export default function ContactList({ navigation }) {
           autoCapitalize="none"
           style={style.input}
         />
-      </View>
-      <View>
+        <Text>Telefone</Text>
+        <Input
+          placeholder="Telefone"
+          value={telefone}
+          onChangeText={setTelefone}
+          keyboardType="phone-pad"
+          autoCapitalize="none"
+          style={style.input}
+        />
+        <View>
         <Button
           style={style.buttons}
           title="Adicionar Contato"
-          onPress={() => {
-            navigation.navigate('contactsUpdate');
-          }} />
+          onPress={handleAddContact}
+          />
+        </View>
+        <Text>Lista de Contatos</Text>
+        {contacts.map(contact => (
+          <View key={contact.id}>
+            <Text>{contact.name}</Text>
+            <Text>{contact.email}</Text>
+            <Button
+              title="Excluir"
+              onPress={() => handleDeleteContact(contact.id)}
+            />
+            <Button
+              title="Atualizar"
+              onPress={() => {
+                navigation.navigate('contactsUpdate', { contact });
+              }}
+            />
+          </View>
+        ))}
       </View>
     </View>
   );
 }
+const style = {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  form: {
+    width: '80%',
+  },
+  input: {
+    marginBottom: 10,
+  },
+  buttons: {
+    marginTop: 10,
+  },
+};
+export default ContactList;

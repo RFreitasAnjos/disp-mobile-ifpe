@@ -6,22 +6,21 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from '@expo/vector-icons';
 import { Link, LinkingContext, NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from "react";
-import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
-import { SafeAreaView, TextInput } from "react-native-web";
-import { app, analytics } from '../../../../Tela04/config/config';
+import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';import { SafeAreaView, TextInput } from "react-native-web";
+import { app, analytics } from '../../../config/config';
 
 const Login = ({navigation}) => {
   
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const handleLogin = () => {
-    const auth = getAuth();
+  const handleLogin = async () => {
+    const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         alert('Login realizado', `Bem-vindo, ${user.email}`);
-        navigation.navigate("contacts")
+        navigation.navigate('ContactList');
       })
       .catch((error) => {
         alert('Erro ao entrar', error.message);
@@ -34,7 +33,6 @@ const Login = ({navigation}) => {
     <View style={style.container}>
       <View style={style.form}>
       <View>
-        <Text>E-mail</Text>
         <Input
           placeholder="E-mail"
           value={email}
@@ -44,7 +42,6 @@ const Login = ({navigation}) => {
           style={style.input}
           autoCompleteType="email"
         />
-        <Text>Password</Text>
         <Input
           placeholder="Password"
           value={password}
@@ -65,7 +62,11 @@ const Login = ({navigation}) => {
           onPress={() => {
             navigation.navigate('Register')
           }}/>
-          <a href="Register"></a>
+          <Button 
+            title="Recuperar Senha"
+            onPress={() => {
+              navigation.navigate('Recover')
+            }}/>
       </View>
     </View>
       </View>

@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import  { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
@@ -35,7 +35,7 @@ export default function App() {
           }}/>
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="contactsUpdate" component={ContactUpdate}/>
-        <Stack.Screen name="contactList" component={ContactList} />
+        <Stack.Screen name="ContactList" component={ContactList} />
         <Stack.Screen name="Recover" component={Recover} />
       </Stack.Navigator>
     </NavigationContainer>
