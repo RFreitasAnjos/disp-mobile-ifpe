@@ -31,6 +31,16 @@ const Login = ({navigation}) => {
 
   return (  
     <View style={style.container}>
+      <View>
+        <Avatar
+          size={100}
+          rounded
+          source={{
+            uri: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+          }}
+          containerStyle={{ marginBottom: 20 }}
+        />
+      </View>
       <View style={style.form}>
       <View>
         <Input
@@ -51,22 +61,22 @@ const Login = ({navigation}) => {
           style={style.input}
           />
       </View>
-      <View>
-      <Button
-      style={style.buttons}
-        title="Entrar"
-        onPress={handleLogin}/>
+      <View style={style.buttons}>
         <Button
-          style={style.buttons}
+          title="Entrar"
+          onPress={handleLogin}/>
+        <Button
           title="Cadastre-se"
+          buttonStyle={{ backgroundColor: "#FF0000" }}
           onPress={() => {
             navigation.navigate('Register')
-          }}/>
-          <Button 
-            title="Recuperar Senha"
-            onPress={() => {
-              navigation.navigate('Recover')
-            }}/>
+        }}/>
+        <Button 
+          title="Recuperar Senha"
+          buttonStyle={{ backgroundColor: "#ffc107" }}
+          onPress={() => {
+            navigation.navigate('Recover')
+        }}/>
       </View>
     </View>
       </View>
@@ -92,6 +102,9 @@ const style = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+    width: "100%",
   },
 });
 export default Login;

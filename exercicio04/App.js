@@ -23,7 +23,7 @@ export default function App() {
           name="login"
           component={Login}
           options={{
-            headerShown: false,
+            headerShown: true,
             headerRight: () => (
               <Ionicons
                 name="notifications-outline"

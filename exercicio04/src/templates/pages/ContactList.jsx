@@ -6,9 +6,12 @@ import { useEffect } from 'react';
 
 const ContactList = ({ navigation }) => {
 
+    const [contactId, setContactId] = useState(null);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('');
     const [contacts, setContacts] = useState([]);
+    
     
 
     useEffect(() => {
@@ -79,13 +82,13 @@ const ContactList = ({ navigation }) => {
           style={style.input}
         />
         <View>
-        <Button
-          style={style.buttons}
-          title="Adicionar Contato"
-          onPress={handleAddContact}
+          <Button
+            style={style.buttons}
+            title="Adicionar Contato"
+            onPress={handleAddContact}
           />
         </View>
-        <Text>Lista de Contatos</Text>
+        {/* <Text>Lista de Contatos</Text>
         {contacts.map(contact => (
           <View key={contact.id}>
             <Text>{contact.name}</Text>
@@ -101,7 +104,7 @@ const ContactList = ({ navigation }) => {
               }}
             />
           </View>
-        ))}
+        ))} */}
       </View>
     </View>
   );
