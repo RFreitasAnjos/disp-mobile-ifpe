@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import { View, Text } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import { useEffect } from 'react';
+
 
 const ContactList = ({ navigation }) => {
 
@@ -12,24 +13,24 @@ const ContactList = ({ navigation }) => {
     const [telefone, setTelefone] = useState('');
     const [contacts, setContacts] = useState([]);
     
-    
-
+  
     useEffect(() => {
         const fetchContacts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/contact');
+                const response = await axios.get('http://localhost:3000/contacts');
                 setContacts(response.data);
             } catch (error) {
                 console.error('Error fetching contacts:', error);
             }
         };
-
         fetchContacts();
     }, []);
+
+
     const handleAddContact = async () => {
         try {
             const newContact = { name, email, telefone };
-            const response = await axios.post('http://localhost:3000/contact', newContact);
+            const response = await axios.post('http://localhost:3000/contacts', newContact);
             setContacts([...contacts, response.data]);
             setName('');
             setEmail('');
@@ -42,7 +43,7 @@ const ContactList = ({ navigation }) => {
     };
     const handleDeleteContact = async (id) => {
         try {
-            await axios.delete(`hhttp://localhost:3000/contact/${id}`);
+            await axios.delete(`hhttp://localhost:3000/contacts/${id}`);
             setContacts(contacts.filter(contact => contact.id !== id));
         } catch (error) {
             console.error('Error deleting contact:', error);
@@ -53,6 +54,28 @@ const ContactList = ({ navigation }) => {
 
   return (
     <View style={style.container}>
+      <View style={{flex: 1, width: '80%',flexDirection:'column', justifyContent: 'center', alignItems: 'center'}}>
+        <View>
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>Lista de Contatos</Text>
+        </View>
+        {contacts.map(contact => (
+          <View key={contact.id} style={style.list}>
+            <Text>{contact.name}</Text>
+            <Button
+              title="Excluir"
+              onPress={() => handleDeleteContact(contact.id)}
+            />
+            <Button
+              title="Atualizar"
+              onPress={() => {
+                navigation.navigate('contactsUpdate', { contact });
+              }}
+            />
+          </View>
+        ))}
+      </View>
+
+
       <View style={style.form}>
         <Text>Lista de Contatos</Text>
         <Text>Nome</Text>
@@ -124,5 +147,12 @@ const style = {
   buttons: {
     marginTop: 10,
   },
+  list: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  }
 };
 export default ContactList;
