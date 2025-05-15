@@ -8,11 +8,27 @@ import { Link, LinkingContext, NavigationContainer, useNavigation, useRoute } fr
 import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 import { SafeAreaView, TextInput } from "react-native-web";
+import { app, analytics } from '../../../../Tela04/config/config';
 
 const Login = ({navigation}) => {
   
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const handleLogin = () => {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert('Login realizado', `Bem-vindo, ${user.email}`);
+        navigation.navigate("contacts")
+      })
+      .catch((error) => {
+        alert('Erro ao entrar', error.message);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  }
 
   return (  
     <View style={style.container}>
@@ -42,24 +58,14 @@ const Login = ({navigation}) => {
       <Button
       style={style.buttons}
         title="Entrar"
-        onPress={() => {
-          const auth = getAuth();
-          signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-            const user = userCredential.user;
-            alert('Login realizado', `Bem-vindo, ${user.email}`);
-            navigation.navigate("contacts")
-          })
-          .catch((error) => {
-            alert('Erro ao entrar', error.message);
-          });
-        }}/>
+        onPress={handleLogin}/>
         <Button
           style={style.buttons}
           title="Cadastre-se"
           onPress={() => {
             navigation.navigate('Register')
           }}/>
-          <Button></Button>
+          <a href="Register"></a>
       </View>
     </View>
       </View>

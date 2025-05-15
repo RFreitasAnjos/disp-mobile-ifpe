@@ -9,6 +9,8 @@ import Register from './src/templates/pages/Register';
 import Login from './src/templates/pages/Login';
 import ContactUpdate from './src/templates/pages/ContactUpdate';
 import { SafeAreaView } from 'react-native';
+import Recover from './src/templates/pages/Recover';
+import ContactList from './src/templates/pages/ContactList';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +34,9 @@ export default function App() {
             ),
           }}/>
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="contacts" component={ContactUpdate}/>
+        <Stack.Screen name="contactsUpdate" component={ContactUpdate}/>
+        <Stack.Screen name="contactList" component={ContactList} />
+        <Stack.Screen name="Recover" component={Recover} />
       </Stack.Navigator>
     </NavigationContainer>
   );
