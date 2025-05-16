@@ -40,4 +40,22 @@ export default function Recover({ navigation }) {
       </View>
     </View>
   );
+
+  const style = {
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    form: {
+      width: '80%',
+      marginBottom: 20,
+    },
+    input: {
+      marginBottom: 10,
+    },
+    buttons: {
+      width: '100%',
+    },
+  };
 }

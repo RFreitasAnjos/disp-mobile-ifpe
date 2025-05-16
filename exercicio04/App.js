@@ -23,10 +23,10 @@ export default function App() {
           name="login"
           component={Login}
           options={{
-            headerShown: true,
+            headerShown: false,
             headerRight: () => (
               <Ionicons
-                name="notifications-outline"
+                name="ios-person-add"
                 size={24}
                 color="black"
                 style={{ marginRight: 10 }}

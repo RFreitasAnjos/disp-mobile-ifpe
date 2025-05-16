@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList, Alert, TouchableOpacity } from "react-native";
 import { Avatar, Text, Input } from "react-native-elements";
 import { Button, ListItem } from "@rneui/themed";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,24 +8,37 @@ import { Link, LinkingContext, NavigationContainer, useNavigation, useRoute } fr
 import { useState } from "react";
 import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';import { SafeAreaView, TextInput } from "react-native-web";
 import { app, analytics } from '../../../config/config';
+import InputPassword from "../components/InputPassword";
+import InputEmail from "../components/InputEmail";
+import ButtonRecover from "../components/ButtonRecover";
 
 const Login = ({navigation}) => {
   
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isSecure, setIsSecure] = useState(true);
 
   const handleLogin = async () => {
+    if(email === "" || password === "") {
+      Alert.alert("Erro",'Preencha todos os campos');
+      return navigation.navigate('Login');
+    }
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        alert('Login realizado', `Bem-vindo, ${user.email}`);
+        Alert.alert('Login realizado', `Bem-vindo, ${user.email}`);
         navigation.navigate('ContactList');
       })
       .catch((error) => {
-        alert('Erro ao entrar', error.message);
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        if(error.code === 'auth/invalid-email') {
+          Alert.alert('Email inválido');
+        }
+        if(error.code === 'auth/wrong-password') {
+          Alert.alert('Senha incorreta');
+        }
+
+
       });
   }
 
@@ -43,40 +56,22 @@ const Login = ({navigation}) => {
       </View>
       <View style={style.form}>
       <View>
-        <Input
-          placeholder="E-mail"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          style={style.input}
-          autoCompleteType="email"
-        />
-        <Input
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          keyboardType="email-address"
-          secureTextEntry 
-          style={style.input}
-          />
+        <InputEmail value={email} setEmail={setEmail}/>
+        <InputPassword value={password} setPassword={setPassword} isSecure={isSecure} setIsSecure={setIsSecure}/>
       </View>
       <View style={style.buttons}>
         <Button
           title="Entrar"
-          onPress={handleLogin}/>
+          onPress={()=> {
+            handleLogin();
+          }}/>
         <Button
           title="Cadastre-se"
           buttonStyle={{ backgroundColor: "#FF0000" }}
           onPress={() => {
             navigation.navigate('Register')
         }}/>
-        <Button 
-          title="Recuperar Senha"
-          buttonStyle={{ backgroundColor: "#ffc107" }}
-          onPress={() => {
-            navigation.navigate('Recover')
-        }}/>
+        <ButtonRecover navigation={navigation}></ButtonRecover>
       </View>
     </View>
       </View>
