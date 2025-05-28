@@ -3,12 +3,11 @@ import {View, Text, StyleSheet} from 'react-native'
 import { Image, Input } from "react-native-elements";
 import { StatusBar } from "react-native-web";
 import * as ImagePicker from 'expo-image-picker';
+import Container from '../components/Container';
 
 const Home = ({navigation}) => {
     return (
-    <View style={style.container}>
-        <Image source={{uri:'https://res.cloudinary.com/@exercice-disp/image/upload/cld-sample-4.jpg'}}></Image>
-    </View>
+        <View></View>
     )
 }
 

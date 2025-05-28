@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link, LinkingContext, NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from "react";
 import { getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';import { SafeAreaView, TextInput } from "react-native-web";
-import { app, analytics } from '../../../config/config';
+import { app, analytics } from '../../config/config';
 import InputPassword from "../components/InputPassword";
 import InputEmail from "../components/InputEmail";
 import ButtonRecover from "../components/ButtonRecover";
@@ -28,7 +28,7 @@ const Login = ({navigation}) => {
       .then((userCredential) => {
         const user = userCredential.user;
         Alert.alert('Login realizado', `Bem-vindo, ${user.email}`);
-        navigation.navigate('ContactList');
+        navigation.navigate('Send');
       })
       .catch((error) => {
         if(error.code === 'auth/invalid-email') {

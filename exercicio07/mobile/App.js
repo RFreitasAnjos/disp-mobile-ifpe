@@ -18,13 +18,21 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='login'>
-        <Stack.Screen name="Login" component={Login} options={{
-          headerShown:true
+      <Stack.Navigator initialRouteName="login">
+        <Stack.Screen name="login" component={Login} options={{
+          headerShown:true,
+          headerRight: () => (
+              <Ionicons
+                name="ios-person-add"
+                size={24}
+                color="black"
+                style={{ marginRight: 10 }}
+              />
+            ),
         }}/>
         <Stack.Screen name='Home' component={Home}/>
         <Stack.Screen name='Register' component={Register}/>
-        <Stack.screen name='Recover' component={Recover}/>
+        <Stack.Screen name='Recover' component={Recover}/>
         <Stack.Screen name='Send' component={Send}/>
         <Stack.Screen name='Update' component={Update}/>
       </Stack.Navigator>

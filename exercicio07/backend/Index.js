@@ -1,12 +1,13 @@
 const cloudinary = require('cloudinary');
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+
 
 cloudinary.config({ 
-    cloud_name: 'doe9vhxyb', 
+    cloud_name: 'exercice-disp', 
     api_key: '848875746746698', 
-    api_secret: '<your_api_secret>' // Click 'View API Keys' above to copy your API secret
+    api_secret: 'Root' // Click 'View API Keys' above to copy your API secret
 });
 
 const app = express();
@@ -45,7 +46,7 @@ app.delete('/delete-image', async(req,res) => {
     }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     try{
         console.log(`Servidor rodando em http://10.31.88.99:${PORT}`)
     } catch ( err ) {

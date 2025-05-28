@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
-import { app } from '../../../config/config.js';
+import { app } from '../../config/config';
 import { Button, Input } from 'react-native-elements';
 
-export default function Recover({ navigation }) {
+ const Recover = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const auth = getAuth(app);
   const handleRecoverPassword = () => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        alert('E-mail de recuperação enviado com sucesso!');
+        Alert.alert('E-mail de recuperação enviado com sucesso!');
         navigation.navigate('login');
       })
       .catch((error) => {
-        alert('Erro ao enviar e-mail de recuperação', error.message);
+        Alert.alert('Erro ao enviar e-mail de recuperação', error.message);
       });
   };
   return (
@@ -40,22 +40,23 @@ export default function Recover({ navigation }) {
       </View>
     </View>
   );
-
-  const style = {
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    form: {
-      width: '80%',
-      marginBottom: 20,
-    },
-    input: {
-      marginBottom: 10,
-    },
-    buttons: {
-      width: '100%',
-    },
-  };
 }
+
+const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  form: {
+    width: '80%',
+    marginBottom: 20,
+  },
+  input: {
+    marginBottom: 10,
+  },
+  buttons: {
+    width: '100%',
+  },
+});
+export default Recover;

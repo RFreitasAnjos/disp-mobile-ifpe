@@ -1,9 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { app, analytics } from '../../../config/config';
+import { app, analytics } from '../../config/config';
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -66,7 +66,7 @@ const Register = ({navigation}) =>{
     );
 }
 
-const style = {
+const style = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -82,6 +82,6 @@ const style = {
     buttons: {
         marginTop: 10,
     },
-};
+});
 
 export default Register;
