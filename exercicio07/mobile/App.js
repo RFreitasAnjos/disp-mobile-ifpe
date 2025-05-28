@@ -1,13 +1,34 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+
+// Import pages
+import Home from './src/pages/Home'
+import Login from './src/pages/Login';
+import Register from './src/pages/Register'
+import Recover from './src/pages/Recover'
+import Send from './src/pages/Send';
+import Update from './src/pages/Update';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='login'>
+        <Stack.Screen name="Login" component={Login} options={{
+          headerShown:true
+        }}/>
+        <Stack.Screen name='Home' component={Home}/>
+        <Stack.Screen name='Register' component={Register}/>
+        <Stack.screen name='Recover' component={Recover}/>
+        <Stack.Screen name='Send' component={Send}/>
+        <Stack.Screen name='Update' component={Update}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
