@@ -38,7 +38,7 @@ app.delete('/delete-image', async(req,res) => {
     }
 
     try{
-        const result = await cloudinary.uploader.destrou(public_id);
+        const result = await cloudinary.uploader.destroy(public_id);
         res.json(result);
     } catch ( err ) {
         console.error(err);
